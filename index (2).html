@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="kk"><head><meta charset="utf-8"><title>Астрономия үйі</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#060a1c;--ink:#e8ecff;--gold:#f5c542;--pan:#0e1535}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at top,#16204a,#060a1c 70%);color:var(--ink);font-family:Georgia,'Times New Roman',serif;min-height:100vh;overflow-x:hidden}
+#house{width:min(96vw,920px);margin:14px auto;transform-origin:left center;transition:transform 1.1s ease,opacity .6s ease .6s;perspective:1200px}
+#house.open{transform:rotateY(-100deg);opacity:0}
+.roof{background:linear-gradient(#0c1233,#18224f);clip-path:polygon(50% 0,100% 100%,0 100%);height:150px;margin:0 -2%;display:flex;align-items:flex-end;justify-content:center;border-bottom:4px solid var(--gold)}
+.roof div{text-align:center;padding:0 0 12px}
+.roof h1{margin:0;font-size:clamp(18px,4.5vw,36px);letter-spacing:2px}
+.roof p{margin:2px 0 0;font-size:clamp(10px,2vw,14px);color:var(--gold)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:8px;background:#0a0f28;border:3px solid #2b3566}
+.win{position:relative;min-height:clamp(120px,24vw,200px);border:3px solid var(--gold);border-radius:6px;cursor:pointer;overflow:hidden;background:#0b1130;transition:transform .25s,box-shadow .25s;color:inherit;font:inherit;padding:0}
+.win:hover,.win:focus-visible{transform:scale(1.03);box-shadow:0 0 22px #f5c54299;outline:none}
+.win b{position:absolute;left:6px;right:6px;top:6px;background:#f5c542dd;color:#222;font-size:clamp(10px,2vw,14px);padding:3px 6px;border-radius:4px;text-align:center}
+.win i{position:absolute;inset:0;display:block}
+.g1 i{background:radial-gradient(circle at 25% 60%,#ffb02e 0 14%,#ff7a00 16%,transparent 18%),radial-gradient(circle at 50% 66%,#5aa0ff 0 4%,transparent 5%),radial-gradient(circle at 62% 66%,#d9774a 0 3%,transparent 4%),radial-gradient(circle at 76% 64%,#e8c07a 0 6%,transparent 7%),radial-gradient(circle at 90% 66%,#6fd0e6 0 4%,transparent 5%)}
+.g2 i{background:conic-gradient(from 0deg at 50% 58%,#7b5bff,#ffd6ff,#4a6bff,#7b5bff);-webkit-mask:radial-gradient(ellipse 40% 22% at 50% 58%,#000 30%,transparent 70%);mask:radial-gradient(ellipse 40% 22% at 50% 58%,#000 30%,transparent 70%)}
+.g3 i{background:radial-gradient(circle at 50% 60%,#fff 0 3%,#8aa 6%,transparent 40%),radial-gradient(circle at 20% 30%,#fff 0 1%,transparent 2%),radial-gradient(circle at 80% 80%,#fff 0 1%,transparent 2%),radial-gradient(circle at 75% 35%,#fff 0 1%,transparent 2%)}
+.g4 i{background:radial-gradient(circle at 25% 40%,#fff 0 2%,transparent 3%),radial-gradient(circle at 45% 55%,#fff 0 2%,transparent 3%),radial-gradient(circle at 60% 40%,#fff 0 2%,transparent 3%),radial-gradient(circle at 78% 62%,#fff 0 2%,transparent 3%),radial-gradient(circle at 50% 75%,#fff 0 2%,transparent 3%)}
+.g5 i{background:radial-gradient(ellipse at 40% 60%,#ff4f9a99,transparent 50%),radial-gradient(ellipse at 62% 55%,#4fa6ff99,transparent 50%)}
+.door{border-color:#ffd77a;animation:glow 2s infinite alternate}
+.door i{background:radial-gradient(ellipse at 50% 70%,#ffe39a,#7b5bff55 60%,transparent);display:flex;align-items:center;justify-content:center;font-size:clamp(34px,8vw,64px)}
+@keyframes glow{to{box-shadow:0 0 28px #ffd77acc}}
+.base{background:#050814;border:3px solid #2b3566;border-top:0;text-align:center;padding:10px;font-size:clamp(11px,2vw,15px);color:#b9c3ff}
+#book{position:fixed;inset:0;display:none;background:radial-gradient(ellipse at top,#16204a,#060a1c 70%);padding:calc(8px + env(safe-area-inset-top,0px)) 8px calc(8px + env(safe-area-inset-bottom,0px));flex-direction:column;gap:8px}
+#book.show{display:flex}
+.bar{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.bar button,.nav button{background:var(--pan);color:var(--ink);border:1px solid #3a4780;border-radius:6px;padding:7px 10px;font:inherit;font-size:13px;cursor:pointer}
+.bar button.on{background:var(--gold);color:#222;border-color:var(--gold)}
+.spread{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1.2fr;gap:8px;max-width:1100px;width:100%;margin:0 auto}
+.pg{background:#101840;border:2px solid #2b3566;border-radius:8px;padding:16px;overflow:auto}
+.pg small{color:var(--gold)}
+.pg h2{margin:4px 0 10px;font-size:clamp(20px,4vw,30px)}
+.pg p{line-height:1.55;font-size:15px}
+.pg ul{padding-left:18px;line-height:1.6;font-size:14px}
+.pg a{color:#7fc4ff}
+#cv{padding:0;position:relative;overflow:hidden;background:#02040c}
+#cv span{position:absolute;bottom:6px;left:0;right:0;text-align:center;font-size:12px;color:#8fa0e0;pointer-events:none}
+#cv canvas{display:block;width:100%;height:100%;touch-action:none}
+.nav{display:flex;justify-content:center;align-items:center;gap:12px}
+@media(max-width:700px){.spread{grid-template-columns:1fr;grid-template-rows:1fr 1fr}}
+#gate{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;padding:16px;background:radial-gradient(ellipse at top,#16204a,#060a1c 70%);z-index:5;transition:opacity .8s}
+#gate.out{opacity:0;pointer-events:none}
+#gate h1{margin:0;font-size:clamp(24px,6vw,48px);letter-spacing:3px}
+#gate p{margin:0;color:var(--gold)}
+.dw{width:min(60vw,220px);height:min(85vw,320px);perspective:900px;position:relative;cursor:pointer;background:#05081a;padding:0;border-radius:110px 110px 0 0;box-shadow:inset 0 0 40px #7b5bff,0 0 30px #f5c54266;border:6px solid var(--gold)}
+.dw .lf,.dw .in{position:absolute;inset:0;border-radius:100px 100px 0 0}
+.dw .in{background:radial-gradient(circle,#fff 0 1%,#7b5bff 8%,#0b1236 60%)}
+.dw .lf{background:linear-gradient(135deg,#1b2766,#0b1236);transform-origin:left center;transition:transform 1.2s ease;display:flex;align-items:center;justify-content:flex-end;padding-right:14px;border-right:3px solid var(--gold)}
+.dw .lf:after{content:'';width:14px;height:14px;border-radius:50%;background:var(--gold)}
+.dw.op .lf{transform:rotateY(-110deg)}
+figure img{width:100%;max-height:220px;object-fit:cover;border-radius:6px;display:block}
+figcaption{font-size:11px;color:#8fa0e0;margin-top:4px}
+</style></head><body>
+<div id="gate"><h1>АСТРОНОМИЯ ҮЙІ</h1><p>Аспан әлемін бірге зерттейік!</p><button class="dw" id="dw" aria-label="Есікті ашу"><div class="in"></div><div class="lf"></div></button><p>Есікті басып, ішке кіріңіз</p></div>
+<div id="house" style="display:none">
+<div class="roof"><div><h1>АСТРОНОМИЯ ҮЙІ</h1><p>Аспан әлемін бірге зерттейік!</p></div></div>
+<div class="grid">
+<button class="win g1" data-c="0"><b>Күн жүйесі</b><i></i></button>
+<button class="win g2" data-c="1"><b>Құс жолы</b><i></i></button>
+<button class="win g3" data-c="2"><b>Әлем</b><i></i></button>
+<button class="win g4" data-c="3"><b>Шоқжұлдыздар</b><i></i></button>
+<button class="win door" data-c="0"><b>Басты бет</b><i>📖</i></button>
+<button class="win g5" data-c="4"><b>Тұмандықтар</b><i></i></button>
+</div>
+<div class="base">Бөлмені таңдап, кітапты ашыңыз</div>
+</div>
+<div id="book">
+<div class="bar" id="chs"></div>
+<div class="spread"><div class="pg" id="tx"></div><div class="pg" id="cv"><span>Модельді тартып айналдырыңыз · дөңгелекпен үлкейтіңіз</span></div></div>
+<div class="nav"><button id="home">🏠 Үйге</button><button id="pv">← Алдыңғы</button><span id="ct"></span><button id="nx">Келесі →</button></div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+const CH=['1. Күн жүйесі','2. Құс жолы','3. Әлем','4. Шоқжұлдыздар','5. Тұмандықтар'];
+const N='https://science.nasa.gov/';
+// [тарау, атауы, мәтін, деректер, модель, NASA сілтемесі]
+const P=[
+[0,'Біздің Күн жүйесі','Күн жүйесі — Күн мен оның тартылыс күшімен байланысқан барлық денелер: 8 планета, ергежейлі планеталар, серіктер, астероидтар мен кометалар. Ол шамамен 4,6 млрд жыл бұрын газ бен шаң бұлтынан пайда болған.','8 планета|Жасы ≈ 4,6 млрд жыл|Орт бұлтының шекарасы ≈ 2 жарық жылы',['sys'],'solar-system/'],
+[0,'Күн','Күн — жүйедегі жалғыз жұлдыз, оның массасы жүйе массасының 99,8%-ын құрайды. Ішінде сутегі гелийге айналады, осыдан жарық пен жылу бөлінеді.','Диаметрі: 1 392 700 км|Беті температурасы ≈ 5500 °C|Құрамы: 71% сутегі, 27% гелий',['p','#ffb52e','#ff6a00','blob',1.1,0,1],'sun/'],
+[0,'Меркурий','Күнге ең жақын және ең кіші планета. Атмосферасы дерлік жоқ, сондықтан күндіз өте ыстық, түнде өте суық.','Диаметрі: 4 879 км|Орбиталық кезеңі: 88 Жер күні|Серіктері жоқ',['p','#8d8680','#5c5651','blob',.6],'mercury/'],
+[0,'Шолпан','Тығыз көмірқышқыл газды атмосфера парниктік эффект тудырады, сондықтан Шолпан — ең ыстық планета. Ол өз осінен кері бағытта баяу айналады.','Диаметрі: 12 104 км|Беті температурасы ≈ 465 °C|Орбиталық кезеңі: 225 Жер күні',['p','#e5c07b','#c98f3c','band',.95],'venus/'],
+[0,'Жер','Жер — тіршілік белгілі жалғыз планета. Бетінің шамамен 71%-ын мұхиттар алып жатыр, ал атмосфера бізді зиянды сәулеленуден қорғайды.','Диаметрі: 12 742 км|Орбиталық кезеңі: 365,25 күн|Бір табиғи серігі — Ай',['p','#1f5fbf','#3f9a4a','blob',1],'earth/'],
+[0,'Ай','Ай — Жердің жалғыз табиғи серігі. Оның беті кратерлермен және «теңіздер» деп аталатын қараңғы жазықтармен көмкерілген.','Диаметрі: 3 474 км|Жерден қашықтығы: 384 400 км|Өз осінен айналу уақыты: 27,3 күн',['p','#b9b9b9','#6f6f6f','blob',.55],'moon/'],
+[0,'Марс','«Қызыл планета» бетіндегі темір оксидінің арқасында қызыл түсті. Мұнда Күн жүйесіндегі ең биік тау — Олимп таулы жанартауы бар.','Диаметрі: 6 779 км|Орбиталық кезеңі: 687 Жер күні|2 серігі: Фобос және Деймос',['p','#c1502e','#7b2f17','blob',.75],'mars/'],
+[0,'Юпитер','Ең үлкен планета, газды алып. Оның Үлкен Қызыл дағы — ғасырлар бойы толастамаған алып дауыл.','Диаметрі: 139 820 км|Орбиталық кезеңі ≈ 11,9 Жер жылы|Белгілі серіктері 90-нан астам',['p','#d9b38c','#a8643a','band',1.25],'jupiter/'],
+[0,'Сатурн','Сатурнның сақиналары мұз бен тау жыныстарының миллиардтаған бөлшектерінен тұрады. Планетаның орташа тығыздығы судан аз.','Диаметрі: 116 460 км|Орбиталық кезеңі ≈ 29,4 Жер жылы|Белгілі серіктері 140-тан астам',['p','#e3cf9a','#b79a5c','band',1.1,1],'saturn/'],
+[0,'Уран','Мұзды алып, метан атмосферасы оған көгілдір-жасыл түс береді. Оның осі орбита жазықтығына дерлік параллель, яғни ол «бүйірімен жатып» айналады.','Диаметрі: 50 724 км|Орбиталық кезеңі ≈ 84 Жер жылы|13 белгілі сақинасы бар',['p','#8fe3e6','#5fb5c4','band',.85,2],'uranus/'],
+[0,'Нептун','Ең алыс планета. Мұнда Күн жүйесіндегі ең күшті желдер соғады — жылдамдығы сағатына 2000 км-ге дейін жетеді.','Диаметрі: 49 244 км|Орбиталық кезеңі ≈ 165 Жер жылы|Атмосферасы: сутегі, гелий, метан',['p','#3b5de0','#24379c','band',.85],'neptune/'],
+[1,'Құс жолы галактикасы','Құс жолы — біздің үйіміз болып табылатын сырғалы спиральды галактика. Түнгі аспанда ол ақшыл жолақ болып көрінеді. Күн галактика орталығынан шамамен 26 000 жарық жылы қашықтықта орналасқан.','Диаметрі ≈ 100 000 жарық жылы|Жұлдыздар саны: 100–400 млрд|Күннің толық айналымы ≈ 230 млн жыл',['gal','#ffd9a0','#7aa5ff'],'universe/galaxies/'],
+[1,'Галактика орталығы','Галактиканың орталығында Стрелец A* аталатын аса массивті қара құрдым бар. Оның массасы Күн массасынан шамамен 4 миллион есе артық.','Стрелец A* массасы ≈ 4 млн Күн массасы|Орталық білік (бар) байқалады|Спираль тармақтары: Персей, Стрелец және т.б.',['gal','#fff1c0','#ff9a5c'],'universe/galaxies/'],
+[2,'Әлем және Үлкен жарылыс','Әлем шамамен 13,8 млрд жыл бұрын Үлкен жарылыстан басталды және содан бері кеңеюде. Галактикалар бір-бірінен алыстап барады.','Жасы ≈ 13,8 млрд жыл|Бақыланатын бөлігі ≈ 93 млрд жарық жылы|Кеңею жылдамдығы Хаббл тұрақтысымен өлшенеді',['uni','#9fc0ff'],'universe/'],
+[2,'Қараңғы материя және энергия','Әлемнің тек шамамен 5%-ы біз білетін қарапайым зат. Қалғанының ≈ 27%-ы қараңғы материя, ≈ 68%-ы қараңғы энергия.','Қарапайым зат ≈ 5%|Қараңғы материя ≈ 27%|Қараңғы энергия ≈ 68%',['uni','#c9a0ff'],'universe/'],
+[3,'Ұлы Аю (Жетіқарақшы)','Жетіқарақшы — Ұлы Аю шоқжұлдызындағы жеті жарық жұлдыз. Шөміштің екі шеткі жұлдызы Темірқазықты табуға көмектеседі.','Барлығы 88 ресми шоқжұлдыз бар|Солтүстік аспанда жыл бойы көрінеді|Темірқазық — бағдар жұлдызы',['con',[[.6,.9,0],[.5,-.2,.3],[-.8,-.4,.1],[-.8,.5,-.2],[-1.6,.8,-.4],[-2.4,.6,-.1],[-3.2,-.2,.3]],[[0,1],[1,2],[2,3],[3,0],[3,4],[4,5],[5,6]]],'skywatching/'],
+[3,'Орион','Орион — қысқы аспанның ең әдемі шоқжұлдызы. Ортасында үш жұлдыздан тұратын «белдеу» бар, оның төменінде Орион тұмандығы орналасқан.','Бетельгейзе — қызыл алып|Ригель — көгілдір аса алып|Белдеуінде 3 жұлдыз: Альнитак, Альнилам, Минтака',['con',[[-.9,1.6,0],[.9,1.5,.3],[-.3,0,.1],[0,.05,-.2],[.3,.1,.2],[-.8,-1.6,.2],[.9,-1.5,-.3]],[[0,2],[1,4],[2,3],[3,4],[2,5],[4,6]]],'skywatching/'],
+[3,'Кассиопея','Кассиопея «W» әрпіне ұқсайды. Ол Темірқазықтың қарама-қарсы жағында орналасқан және солтүстікте жыл бойы көрінеді.','Бес негізгі жұлдызы бар|«W» немесе «М» тәрізді|Құс жолы фонында орналасқан',['con',[[-2,0,0],[-1,.9,.3],[0,.1,-.2],[1,.9,.2],[2,.1,-.3]],[[0,1],[1,2],[2,3],[3,4]]],'skywatching/'],
+[4,'Орион тұмандығы','Орион тұмандығы — жаңа жұлдыздар туатын газ бен шаң бұлты. Ол Жерден шамамен 1344 жарық жылы қашықтықта және көзге де көрінеді.','Қашықтығы ≈ 1344 жарық жылы|Түрі: эмиссиялық тұмандық|Ішінде жас жұлдыздар кластері бар',['neb','#ff5fa2','#5fa8ff'],'universe/nebulae/'],
+[4,'Шаян тұмандығы','Шаян тұмандығы — 1054 жылы жарылған аса жаңа жұлдыздың қалдығы. Ортасында секундына шамамен 30 рет айналатын нейтрондық жұлдыз бар.','Жарылыс жылы: 1054|Қашықтығы ≈ 6500 жарық жылы|Түрі: аса жаңа жұлдыз қалдығы',['neb','#ff8a3d','#59d6c9'],'universe/nebulae/'],
+[4,'Сақина тұмандығы','Сақина тұмандығы — Күнге ұқсас жұлдыздың өмірінің соңында лақтырған газ қабығы. Мұндай нысандар планеталық тұмандықтар деп аталады.','Шоқжұлдызы: Лира|Қашықтығы ≈ 2300 жарық жылы|Түрі: планеталық тұмандық',['neb','#5fd0ff','#ff6a6a'],'universe/nebulae/']
+];
+const $=id=>document.getElementById(id);
+let cur=0,renderer,scene,camera,grp,drag=0,px=0,py=0;
+function tex(a,b,t){const c=document.createElement('canvas');c.width=256;c.height=128;const x=c.getContext('2d');x.fillStyle=a;x.fillRect(0,0,256,128);x.globalAlpha=.55;for(let i=0;i<(t=='band'?16:70);i++){x.fillStyle=t=='band'?(i%2?b:a):b;if(t=='band')x.fillRect(0,Math.random()*128,256,4+Math.random()*10);else{x.beginPath();x.arc(Math.random()*256,Math.random()*128,3+Math.random()*16,0,7);x.fill()}}return new THREE.CanvasTexture(c)}
+function sph(r,col,col2,t,emit){const m=emit?new THREE.MeshBasicMaterial({map:tex(col,col2,t)}):new THREE.MeshStandardMaterial({map:tex(col,col2,t),roughness:.9});return new THREE.Mesh(new THREE.SphereGeometry(r,48,32),m)}
+function pts(arr,col,size){const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(arr,3));if(col)g.setAttribute('color',new THREE.Float32BufferAttribute(col,3));return new THREE.Points(g,new THREE.PointsMaterial({size,vertexColors:!!col,color:col?0xffffff:0xffffff,transparent:true,opacity:.9,depthWrite:false}))}
+function model(s){const g=new THREE.Group(),R=Math.random;
+if(s[0]=='p'){const m=sph(s[4],s[1],s[2],s[3],s[6]);g.add(m);if(s[6]){const h=new THREE.Mesh(new THREE.SphereGeometry(s[4]*1.25,32,24),new THREE.MeshBasicMaterial({color:0xff9a1a,transparent:true,opacity:.18,blending:THREE.AdditiveBlending,depthWrite:false}));g.add(h)}
+if(s[5]){const r=new THREE.Mesh(new THREE.RingGeometry(s[4]*1.35,s[4]*(s[5]==1?2.3:1.8),96),new THREE.MeshBasicMaterial({color:s[5]==1?0xcdb98a:0x9fdde6,side:2,transparent:true,opacity:s[5]==1?.8:.4}));r.rotation.x=s[5]==1?1.25:0.1;if(s[5]==2)r.rotation.y=1.4;g.add(r)}}
+else if(s[0]=='sys'){g.add(sph(.5,'#ffb52e','#ff6a00','blob',1));g.add(new THREE.Mesh(new THREE.SphereGeometry(.62,24,16),new THREE.MeshBasicMaterial({color:0xff9a1a,transparent:true,opacity:.2,blending:THREE.AdditiveBlending,depthWrite:false})));g.add(new THREE.PointLight(0xffffff,1.6,0));g.userData.orb=[];[['#8d8680',.07,.9,2.4],['#e5c07b',.11,1.2,1.9],['#1f5fbf',.12,1.55,1.6],['#c1502e',.09,1.9,1.3],['#d9b38c',.3,2.5,.8],['#e3cf9a',.25,3.05,.6],['#8fe3e6',.18,3.55,.42],['#3b5de0',.18,4,.33]].forEach((p,i)=>{const pv=new THREE.Group();pv.rotation.y=i*1.3;const m=new THREE.Mesh(new THREE.SphereGeometry(p[1],24,16),new THREE.MeshStandardMaterial({color:p[0]}));m.position.x=p[2];pv.add(m);g.add(pv);g.userData.orb.push([pv,p[3]*.01]);const o=new THREE.Mesh(new THREE.RingGeometry(p[2]-.005,p[2]+.005,128),new THREE.MeshBasicMaterial({color:0x6f8cff,side:2,transparent:true,opacity:.35}));o.rotation.x=Math.PI/2;g.add(o);if(i==5){const r=new THREE.Mesh(new THREE.RingGeometry(.34,.5,48),new THREE.MeshBasicMaterial({color:0xcdb98a,side:2,transparent:true,opacity:.8}));r.rotation.x=1.2;m.add(r)}});g.rotation.x=.9}
+else if(s[0]=='gal'){const a=[],c=[],A=new THREE.Color(s[1]),B=new THREE.Color(s[2]);for(let i=0;i<9000;i++){const r=Math.pow(R(),.6)*3.4,arm=i%4,ang=r*1.7+arm*Math.PI/2+(R()-.5)*(.5+.25*r);const h=(R()-.5)*.3*Math.exp(-r*.5);a.push(Math.cos(ang)*r,h,Math.sin(ang)*r);const k=new THREE.Color().copy(A).lerp(B,r/3.4);c.push(k.r,k.g,k.b)}g.add(pts(a,c,.035));g.rotation.x=.9}
+else if(s[0]=='uni'){const a=[],c=[],B=new THREE.Color(s[1]);for(let i=0;i<7000;i++){const u=R()*6.283,v=Math.acos(2*R()-1),r=Math.cbrt(R())*3.3;const f=1+.25*Math.sin(u*5)*Math.sin(v*4);a.push(r*f*Math.sin(v)*Math.cos(u),r*f*Math.cos(v),r*f*Math.sin(v)*Math.sin(u));const k=new THREE.Color(0xffffff).lerp(B,R());c.push(k.r,k.g,k.b)}g.add(pts(a,c,.04))}
+else if(s[0]=='con'){const P3=s[1].map(p=>new THREE.Vector3(...p));P3.forEach((p,i)=>{const m=new THREE.Mesh(new THREE.SphereGeometry(.09,16,12),new THREE.MeshBasicMaterial({color:i%3?0xffffff:0xffe6a0}));m.position.copy(p);g.add(m)});const l=[];s[2].forEach(e=>l.push(P3[e[0]],P3[e[1]]));g.add(new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(l),new THREE.LineBasicMaterial({color:0x6f8cff})));const sc=3/Math.max(...P3.map(p=>Math.abs(p.x)),1);g.scale.setScalar(Math.min(1.2,sc*.9))}
+else{const a=[],c=[],A=new THREE.Color(s[1]),B=new THREE.Color(s[2]);for(let i=0;i<6000;i++){const x=(R()+R()+R()-1.5)*2.4,y=(R()+R()+R()-1.5)*1.8,z=(R()+R()+R()-1.5)*2.4;a.push(x,y,z);const k=new THREE.Color().copy(A).lerp(B,Math.min(1,Math.abs(x+y*.5)/1.6)).multiplyScalar(.5+R()*.5);c.push(k.r,k.g,k.b)}g.add(pts(a,c,.06));const st=[];for(let i=0;i<40;i++)st.push((R()-.5)*3,(R()-.5)*2,(R()-.5)*3);g.add(pts(st,null,.09))}
+return g}
+function init(){const h=$('cv');renderer=new THREE.WebGLRenderer({antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));h.appendChild(renderer.domElement);scene=new THREE.Scene();camera=new THREE.PerspectiveCamera(45,1,.1,100);camera.position.z=5;scene.add(new THREE.AmbientLight(0xffffff,.55));const d=new THREE.DirectionalLight(0xffffff,1);d.position.set(5,3,5);scene.add(d);const bg=[];for(let i=0;i<800;i++){const v=new THREE.Vector3(Math.random()-.5,Math.random()-.5,Math.random()-.5).normalize().multiplyScalar(40);bg.push(v.x,v.y,v.z)}scene.add(pts(bg,null,.12));
+const cv=renderer.domElement;cv.onpointerdown=e=>{drag=1;px=e.clientX;py=e.clientY};addEventListener('pointerup',()=>drag=0);addEventListener('pointermove',e=>{if(drag&&grp){grp.rotation.y+=(e.clientX-px)*.01;grp.rotation.x+=(e.clientY-py)*.01;px=e.clientX;py=e.clientY}});cv.addEventListener('wheel',e=>{e.preventDefault();camera.position.z=Math.min(14,Math.max(2,camera.position.z+e.deltaY*.005))},{passive:false});
+addEventListener('resize',rs);rs();(function loop(){requestAnimationFrame(loop);if(grp&&grp.userData.orb){grp.userData.orb.forEach(o=>o[0].rotation.y+=o[1])}else if(grp&&!drag)grp.rotation.y+=.004;renderer.render(scene,camera)})()}
+function rs(){if(!renderer)return;const h=$('cv'),w=h.clientWidth,t=h.clientHeight;if(!w||!t)return;renderer.setSize(w,t);camera.aspect=w/t;camera.updateProjectionMatrix()}
+function show(i){cur=Math.max(0,Math.min(P.length-1,i));const p=P[cur];$('tx').innerHTML='<small>'+CH[p[0]]+'</small><h2>'+p[1]+'</h2><figure id="fg" style="margin:0 0 10px"></figure><p>'+p[2]+'</p><ul>'+p[3].split('|').map(x=>'<li>'+x+'</li>').join('')+'</ul><p><a href="'+N+p[5]+'" target="_blank" rel="noopener">NASA сайтында қарау ↗</a></p>';
+if(grp)scene.remove(grp);grp=model(p[4]);scene.add(grp);camera.position.z=p[4][0]=='p'?4.2:(p[4][0]=='sys'?9:5.5);$('ct').textContent=(cur+1)+' / '+P.length;[...$('chs').children].forEach((b,k)=>b.classList.toggle('on',k==p[0]));rs();loadImg(cur)}
+const Q=['solar system planets','Sun Solar Dynamics Observatory','Mercury MESSENGER','Venus Magellan','Earth Blue Marble','Moon full','Mars Perseverance','Jupiter Juno','Saturn Cassini','Uranus Voyager 2','Neptune Voyager 2','Milky Way galaxy','Sagittarius A* black hole','Planck cosmic microwave background','dark matter Hubble','Ursa Major constellation','Orion constellation','Cassiopeia constellation','Orion Nebula Hubble','Crab Nebula','Ring Nebula Hubble'],cache={};
+async function loadImg(i){const f=$('fg');if(!f)return;try{if(!(i in cache)){const r=await fetch('https://images-api.nasa.gov/search?media_type=image&q='+encodeURIComponent(Q[i]));const j=await r.json();const it=j.collection.items.find(x=>x.links&&x.links[0]);cache[i]=it?{u:it.links[0].href.replace('http://','https://'),t:it.data[0].title}:null}if(i!=cur)return;const c=cache[i];f.textContent='';if(c){const im=new Image();im.src=c.u;im.alt=c.t;const cp=document.createElement('figcaption');cp.textContent=c.t+' — NASA Image and Video Library';f.append(im,cp)}}catch(e){if(i==cur)f.innerHTML='<small>Сурет жүктелмеді (интернетті тексеріңіз)</small>'}}
+$('dw').onclick=()=>{$('dw').classList.add('op');setTimeout(()=>{$('house').style.display='block';$('gate').classList.add('out')},1300);setTimeout(()=>$('gate').style.display='none',2200)};
+CH.forEach((n,k)=>{const b=document.createElement('button');b.textContent=n;b.onclick=()=>show(P.findIndex(p=>p[0]==k));$('chs').appendChild(b)});
+function openBook(c){$('house').classList.add('open');setTimeout(()=>{$('book').classList.add('show');if(!renderer)init();show(P.findIndex(p=>p[0]==c))},900)}
+document.querySelectorAll('.win').forEach(b=>b.onclick=()=>openBook(+b.dataset.c));
+$('pv').onclick=()=>show(cur-1);$('nx').onclick=()=>show(cur+1);
+$('home').onclick=()=>{$('book').classList.remove('show');$('house').classList.remove('open')};
+addEventListener('keydown',e=>{if($('book').classList.contains('show')){if(e.key=='ArrowRight')show(cur+1);if(e.key=='ArrowLeft')show(cur-1)}});
+</script></body></html>
